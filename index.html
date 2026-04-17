@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Age Master Pro</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:linear-gradient(to right,#667eea,#764ba2);
+    display:flex;
+    justify-content:center;
+}
+
+.menu{
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:black;
+}
+
+body.dark .menu{
+    color:white;
+}
+
+/* extra safety */
+.menu{
+    color:black;
+    font-weight:bold;
+}
+.container{
+    position:relative;
+    background:white;
+    width:95%;
+    max-width:380px;
+    margin:15px;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
+    text-align:center;
+}
+
+body.dark .container{
+    background:#1b1b2a;
+    color:white;
+}
+
+/* FIX RESULT TEXT IN DARK MODE */
+body.dark .result-box,
+body.dark .result-box p,
+body.dark .result-box b{
+    color:white;
+}
+
+/* TOGGLE */
+.toggle-box{
+    width:50px;
+    height:24px;
+    background:#ccc;
+    border-radius:50px;
+    position:absolute;
+    top:10px;
+    right:10px;
+    cursor:pointer;
+}
+
+.toggle-circle{
+    width:20px;
+    height:20px;
+    background:white;
+    border-radius:50%;
+    position:absolute;
+    top:2px;
+    left:2px;
+    transition:0.3s;
+}
+
+.toggle-box.active{
+    background:#00c6ff;
+}
+
+.toggle-box.active .toggle-circle{
+    left:26px;
+}
+
+/* TITLE */
+h2{
+    margin-top:35px;
+    padding:10px;
+    border-radius:12px;
+    color:white;
+    background:linear-gradient(45deg,#ff512f,#dd2476,#24c6dc);
+}
+
+/* INFO */
+.info-box{
+    background:#f8f9ff;
+    padding:10px;
+    border-radius:10px;
+    margin:10px 0;
+    font-size:14px;
+    text-align:left;
+    border-left:4px solid #6a11cb;
+}
+
+body.dark .info-box{
+    background:#2a2a40;
+    color:white;
+}
+
+/* SELECT */
+select{
+    padding:8px;
+    margin:5px;
+    border-radius:8px;
+}
+
+/* BUTTON */
+button{
+    width:100%;
+    margin-top:12px;
+    padding:10px;
+    background:#6a11cb;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+}
+
+/* RESULT */
+.result-box{
+    margin-top:10px;
+    padding:10px;
+    border-radius:10px;
+    border:2px solid #667eea;
+    background:#f0f4ff;
+    text-align:left;
+}
+
+body.dark .result-box{
+    background:#2a2a40;
+}
+
+/* SHARE */
+.share-title{
+    margin-top:15px;
+    font-weight:bold;
+}
+
+.social-icons img{
+    width:45px;
+    height:45px;
+    margin:8px;
+    border-radius:50%;
+    background:white;
+    border:2px solid #ddd;
+}
+
+/* EXAMPLE */
+.example{
+    margin-top:15px;
+    padding:12px;
+    border-radius:10px;
+    background:linear-gradient(45deg,#ff9a9e,#fad0c4);
+    text-align:left;
+    font-size:13px;
+    line-height:1.5;
+}
+/* DARK MODE FIX FOR EXAMPLE BOX */
+body.dark .example{
+    background:#111827;
+    color:#ffffff;
+}
+
+body.dark .example p{
+    color:#ffffff;
+}
+
+/* ONLY BORDER STYLE CHANGE */
+.age-link{
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 10px;
+
+  /* normal text + background same as your site */
+  color: inherit;
+  background: transparent;
+
+  /* ✨ ONLY UNIQUE BORDER */
+  border: 2px solid #00f5ff;
+
+  transition: 0.3s;
+}
+
+/* hover effect */
+.age-link:hover{
+  border-color: #ff00c8;
+}
+
+body.dark .age-link{
+  border: 2px solid #ffe600;
+}
+
+body.dark .age-link:hover{
+  border-color: #00f5ff;
+}
+</style>
+</head>
+
+<body>
+<div class="topbar">
+    <div class="menu" onclick="toggleMenu()">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<path d="M3 12H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<path d="M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+</div>
+    <input class="search" placeholder="Search calculator...">
+</div>
+
+<div id="menuBox" style="display:none;position:fixed;top:50px;left:10px;background:white;width:200px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.2);z-index:1000;">
+    
+<a href="comparison.html" style="display:block;padding:10px;text-decoration:none;color:black;">
+    Age Comparison Calculator
+</a>
+
+</div>
+<style>
+.topbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background:white;
+    display:flex;
+    align-items:center;
+    padding:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.2);
+    z-index:999;
+}
+ 
+body.dark .topbar{
+    background:#1b1b2a;
+}
+.menu{
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:black;
+}
+
+.menu svg{
+    stroke:currentColor;
+}
+
+.search{
+    flex:1;
+    padding:8px;
+    border-radius:20px;
+    border:1px solid #ccc;
+}
+
+/* IMPORTANT: page ko neeche shift karo */
+.container{
+    margin-top:70px;
+}
+
+#menuBox a{
+    display:block;
+    width:100%;
+}
+
+#menuBox{
+    z-index:9999;
+}
+}
+</style>
+<div class="container">
+
+<div class="toggle-box" onclick="toggleDark()">
+    <div class="toggle-circle"></div>
+</div>
+
+<h2>Age Calculator</h2>
+
+<div class="info-box">
+This tool calculates your exact age in Years, Months, Weeks, Days, Hours, Minutes & Seconds instantly.
+</div>
+
+<div class="result-box">
+<b>RESULT</b>
+<p id="age">Your age will appear here</p>
+</div>
+
+<h4>Select Birth Date</h4>
+<select id="dobDay"></select>
+<select id="dobMonth"></select>
+<select id="dobYear"></select>
+
+<h4>Today's Date</h4>
+<select id="todayDay"></select>
+<select id="todayMonth"></select>
+<select id="todayYear"></select>
+
+<button onclick="calculateAge()">Calculate Age</button>
+
+<div class="result-box">
+<p id="total"></p>
+</div>
+
+<!-- EXAMPLE -->
+<div class="example">
+
+<p>
+Rohit was born on date of birth 20/07/2010.
+If today's date is 11/04/2026, then his age will be:
+
+👉 15 Years, 8 Months, 22 Days
+</p>
+
+<p>
+This means Rohit has lived for many months and days since his birth date.
+
+Both calculation results are reasonable.Similar situations exist for dates like Apr. 30 to May 31, May 31 to June 30, etc. The confusion comes from the uneven number of days in different months. In our calculations, we use the former method.
+</p>
+
+</div>
+
+<div class="share-title">Share</div>
+
+<div class="social-icons">
+  
+<a href="https://www.instagram.com" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+</a>
+
+<a href="https://www.facebook.com" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733547.png">
+</a>
+
+<a href="https://wa.me/919999999999" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/124/124034.png">
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function toggleDark(){
+    document.body.classList.toggle("dark");
+    document.querySelector(".toggle-box").classList.toggle("active");
+}
+
+function fill(id,start,end){
+    let el=document.getElementById(id);
+    for(let i=start;i<=end;i++){
+        let opt=document.createElement("option");
+        opt.value=i;
+        opt.text=i;
+        el.add(opt);
+    }
+}
+
+let year=new Date().getFullYear();
+
+fill("dobDay",1,31);
+fill("dobMonth",1,12);
+fill("dobYear",1950,year);
+
+fill("todayDay",1,31);
+fill("todayMonth",1,12);
+fill("todayYear",1950,year);
+
+function calculateAge(){
+
+let dob=new Date(dobYear.value, dobMonth.value-1, dobDay.value);
+let today=new Date(todayYear.value, todayMonth.value-1, todayDay.value);
+
+let diff=today-dob;
+
+let years=today.getFullYear()-dob.getFullYear();
+let months=today.getMonth()-dob.getMonth();
+let days=today.getDate()-dob.getDate();
+
+if(days<0){months--;days+=30;}
+if(months<0){years--;months+=12;}
+
+let totalDays=Math.floor(diff/(1000*60*60*24));
+let totalWeeks=Math.floor(totalDays/7);
+let totalHours=Math.floor(diff/(1000*60*60));
+let totalMinutes=Math.floor(diff/(1000*60));
+let totalSeconds=Math.floor(diff/1000);
+
+document.getElementById("age").innerHTML=
+years+" Years "+months+" Months "+days+" Days";
+
+document.getElementById("total").innerHTML=
+"📅 Total Years: "+years+
+"<br>📆 Total Months: "+(years*12 + months)+
+"<br>🗓 Total Weeks: "+totalWeeks+
+"<br>📅 Total Days: "+totalDays+
+"<br>⏰ Total Hours: "+totalHours+
+"<br>⏱ Total Minutes: "+totalMinutes+
+"<br>⏳ Total Seconds: "+totalSeconds;
+
+}
+function toggleMenu(){
+    let m=document.getElementById("menuBox");
+    if(m.style.display==="block"){
+        m.style.display="none";
+    }else{
+        m.style.display="block";
+    }
+   
+}  
+function shareWhatsApp() {
+    let phone = "919999999999"; // apna number daalo
+    let message = "Hello! I want to connect with you";
+
+    let url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+
+    window.open(url, "_blank");
+}
+</script>
+
+</body>
+  </html>
