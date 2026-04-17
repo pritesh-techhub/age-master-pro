@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Age Comparison Calculator</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial;
+    background:linear-gradient(to right,#667eea,#764ba2);
+    display:flex;
+    justify-content:center;
+    transition:0.3s;
+}
+
+/* DARK MODE */
+body.dark{
+    background:linear-gradient(to right,#0f2027,#203a43,#2c5364);
+    color:white;
+}
+
+/* Container */
+.container{
+    background:white;
+    padding:20px;
+    margin:15px;
+    border-radius:15px;
+    width:100%;
+    max-width:360px;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
+    text-align:center;
+    transition:0.3s;
+    position:relative;
+}
+
+body.dark .container{
+    background:#1b1b2a;
+    color:white;
+}
+
+/* TITLE */
+h2{
+    margin-top:35px;
+    margin-bottom:10px;
+    padding:10px;
+    border-radius:12px;
+    font-size:20px;
+    font-weight:bold;
+    color:white;
+    background:linear-gradient(45deg,#ff512f,#dd2476,#24c6dc);
+    border:2px solid white;
+    letter-spacing:1px;
+}
+
+body.dark h2{
+    background:linear-gradient(45deg,#00c6ff,#0072ff);
+}
+
+/* Divider */
+.divider{
+    width:100%;
+    height:3px;
+    background:#6a11cb;
+    margin-bottom:15px;
+    border-radius:10px;
+}
+
+body.dark .divider{
+    background:#00c6ff;
+}
+
+/* ================= INFO BOX (UNIQUE PARAGRAPH STYLE) ================= */
+.info-box{
+    background:#f8f9ff;
+    padding:12px;
+    border-radius:10px;
+    margin:10px 0;
+    font-size:15px;
+    line-height:1.6;
+    border-left:4px solid #6a11cb;
+    text-align:left;
+}
+
+body.dark .info-box{
+    background:#2a2a40;
+    border-left:4px solid #00c6ff;
+}
+
+/* Section */
+.section-title{
+    text-align:left;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+/* Dropdown */
+select{
+    padding:8px;
+    margin:5px 3px;
+    border-radius:10px;
+    border:2px solid #6a11cb;
+}
+
+body.dark select{
+    background:#2a2a40;
+    color:white;
+    border:2px solid #00c6ff;
+}
+
+/* Button */
+button{
+    margin-top:12px;
+    padding:10px;
+    width:100%;
+    background:#6a11cb;
+    color:white;
+    border:none;
+    border-radius:10px;
+}
+
+body.dark button{
+    background:#00c6ff;
+    color:black;
+}
+
+/* Result */
+.box{
+    margin-top:10px;
+    padding:10px;
+    border-radius:12px;
+    border:2px solid transparent;
+    background:linear-gradient(white,white) padding-box,
+                linear-gradient(45deg,#ff6a00,#ee0979) border-box;
+    font-weight:bold;
+}
+
+body.dark .box{
+    background:linear-gradient(#1e1e2f,#1e1e2f) padding-box,
+                linear-gradient(45deg,#00c6ff,#0072ff) border-box;
+}
+
+/* ================= SHARE (NOW LAST) ================= */
+.share-title{
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.social-icons img{
+    width:45px;
+    height:45px;
+    margin:8px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+/* ================= WIFI TOGGLE ================= */
+.toggle-box{
+    width:45px;
+    height:22px;
+    background:#ccc;
+    border-radius:50px;
+    position:absolute;
+    top:12px;
+    right:12px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.toggle-circle{
+    width:18px;
+    height:18px;
+    background:white;
+    border-radius:50%;
+    position:absolute;
+    top:2px;
+    left:2px;
+    transition:0.3s;
+}
+
+.toggle-box.active{
+    background:#00c6ff;
+}
+
+.toggle-box.active .toggle-circle{
+    left:25px;
+}
+
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #444;
+}
+
+.menu a:hover {
+  background: #000;
+}
+
+/* ===== BACK BUTTON (PRO STYLE) ===== */
+.back{
+  font-size:22px;
+  font-weight:bold;
+  text-decoration:none;
+
+  /* light mode */
+  color:#fff;
+  background:linear-gradient(135deg, #555, #222);
+
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:12px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.3);
+
+  transition:0.3s;
+}
+
+/* hover effect */
+.back:hover{
+  transform:scale(1.1);
+  background:linear-gradient(135deg, #000, #444);
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+body.dark .back{
+  background:linear-gradient(135deg, #888, #333);
+  color:#fff;
+}
+
+body.dark .back:hover{
+  background:linear-gradient(135deg, #aaa, #555);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- DARK MODE TOGGLE -->
+<div class="toggle-box" onclick="toggleDark()">
+    <div class="toggle-circle"></div>
+</div>
+
+<a href="javascript:history.back()" class="back">←</a>
+
+<h2>Age Comparison Calculator</h2>
+<a href="index.html">⬅ Back</a>
+<div class="divider"></div>
+
+<!-- TOP INFO -->
+<div class="info-box">
+Enter the age of person 1 and person 2 to calculate difference in ages using this age difference calculator.
+</div>
+
+<div class="section-title">Person 1 Date of Birth</div>
+<select id="day1"></select>
+<select id="month1"></select>
+<select id="year1"></select><br>
+
+<select id="gender1">
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+
+<div class="section-title">Person 2 Date of Birth</div>
+<select id="day2"></select>
+<select id="month2"></select>
+<select id="year2"></select><br>
+
+<select id="gender2">
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result-title"><b>Result</b></div>
+
+<div id="ageBox1" class="box"></div>
+<div id="ageBox2" class="box"></div>
+<div id="diffBox" class="box"></div>
+
+<!-- PARAGRAPH (NOW ABOVE SHARE) -->
+<div class="info-box">
+An age difference calculator helps to determine the difference in age between two people by their birthday. The difference will be calculated in years, months and days.
+</div>
+
+<!-- SHARE SECTION (NOW LAST) -->
+<div class="share-title">Share</div>
+
+<div class="social-icons">
+<img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" onclick="window.open('https://www.instagram.com')">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" onclick="window.open('https://www.facebook.com')">
+<img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" onclick="shareWhatsApp()">
+</div>
+
+</div>
+
+<script>
+
+function toggleDark(){
+    document.body.classList.toggle("dark");
+    document.querySelector(".toggle-box").classList.toggle("active");
+}
+
+function fill(id,start,end){
+    let el=document.getElementById(id);
+    for(let i=start;i<=end;i++){
+        let opt=document.createElement("option");
+        opt.value=i;
+        opt.text=i;
+        el.add(opt);
+    }
+}
+
+let year=new Date().getFullYear();
+fill("day1",1,31);
+fill("day2",1,31);
+fill("month1",1,12);
+fill("month2",1,12);
+fill("year1",1900,year);
+fill("year2",1900,year);
+
+function getAge(d,m,y){
+    let t=new Date();
+    let b=new Date(y,m-1,d);
+
+    let Y=t.getFullYear()-b.getFullYear();
+    let M=t.getMonth()-b.getMonth();
+    let D=t.getDate()-b.getDate();
+
+    if(D<0){M--;D+=30;}
+    if(M<0){Y--;M+=12;}
+
+    return {Y,M,D};
+}
+
+function calculate(){
+    let d1=day1.value,m1=month1.value,y1=year1.value;
+    let d2=day2.value,m2=month2.value,y2=year2.value;
+
+    let a1=getAge(d1,m1,y1);
+    let a2=getAge(d2,m2,y2);
+
+    let date1=new Date(y1,m1-1,d1);
+    let date2=new Date(y2,m2-1,d2);
+
+    let diffTime=Math.abs(date1-date2);
+    let diffDate=new Date(diffTime);
+
+    let dy=diffDate.getUTCFullYear()-1970;
+    let dm=diffDate.getUTCMonth();
+    let dd=diffDate.getUTCDate()-1;
+
+    let older=(date1<date2) ?"Person 1 is older"
+              :(date2<date1) ?"Person 2 is older"
+              :"Same age";
+
+    eBox1.innerHTML=`Person 1: ${a1.Y} Years ${a1.M} Months ${a1.D} Days`;
+    ageBox2.innerHTML=`Person 2: ${a2.Y} Years ${a2.M} Months ${a2.D} Days`;
+    diffBox.innerHTML=`Difference: ${dy} Years ${dm} Months ${dd} Days <br>${older}`;
+}
+
+function shareWhatsApp(){
+    let text=diffBox.innerText;
+    window.open("https://wa.me/?text="+encodeURIComponent(text));
+}
+
+</script>
+
+</body>
+</html>
